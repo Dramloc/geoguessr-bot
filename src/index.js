@@ -2,20 +2,21 @@
 import Discord from "discord.js";
 import got from "got";
 import parseDuration from "parse-duration";
-import puppeteer from "puppeteer";
+import { CookieJar } from "tough-cookie";
 
+/** @type {() => Promise<string>} */
 const getAuthenticationCookie = async () => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto("https://www.geoguessr.com/signin");
-  await page.type("[name=email]", process.env.GEOGUESSR_EMAIL);
-  await page.type("[name=password]", process.env.GEOGUESSR_PASSWORD);
-  await page.click("[type=submit]");
-  await page.waitForNavigation();
-  const cookies = await page.cookies();
-  await browser.close();
+  const cookieJar = new CookieJar();
+  await got.post("https://www.geoguessr.com/api/v3/accounts/signin", {
+    cookieJar,
+    json: {
+      email: process.env.GEOGUESSR_EMAIL,
+      password: process.env.GEOGUESSR_PASSWORD,
+    },
+  });
 
-  return cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join("; ");
+  const cookie = await cookieJar.getCookieString("https://www.geoguessr.com/");
+  return cookie;
 };
 
 /**

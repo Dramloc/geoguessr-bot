@@ -16,7 +16,7 @@
     "dotenv-defaults": "^2.0.1",
     "got": "^11.8.2",
     "parse-duration": "^0.4.4",
-    "puppeteer": "^8.0.0"
+    "tough-cookie": "^4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.0",
