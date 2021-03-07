@@ -1,0 +1,70 @@
+{
+  "name": "geoguessr-bot",
+  "version": "1.0.0",
+  "main": "./src/index.js",
+  "author": "Antoine Colmard <a.colmard@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon --exec \"babel-node -r dotenv-defaults/config src/index.js\"",
+    "build": "babel src --delete-dir-on-start --out-dir dist --ignore \"src/**/*.test.js\"",
+    "serve": "cross-env NODE_ENV=production node -r dotenv-defaults/config dist/index.js",
+    "test": "eslint src"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "discord.js": "^12.5.1",
+    "dotenv-defaults": "^2.0.1",
+    "got": "^11.8.2",
+    "parse-duration": "^0.4.4",
+    "puppeteer": "^8.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.0",
+    "@babel/core": "^7.13.8",
+    "@babel/eslint-parser": "^7.13.8",
+    "@babel/node": "^7.13.0",
+    "@babel/preset-env": "^7.13.8",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
+  },
+  "eslintConfig": {
+    "parser": "@babel/eslint-parser",
+    "extends": [
+      "eslint:recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings",
+      "plugin:prettier/recommended"
+    ],
+    "rules": {
+      "no-unused-vars": [
+        "warn",
+        {
+          "ignoreRestSiblings": true
+        }
+      ]
+    },
+    "env": {
+      "node": true,
+      "es6": true
+    }
+  },
+  "prettier": {
+    "printWidth": 100
+  }
+}
